@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="pageTitle">Portfolio | Eve Haddox</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Płótno, na którym Three.js będzie renderować tło 3D -->
+    <canvas id="bg"></canvas>
+
+    <!-- Przełącznik języków -->
+    <div id="lang-switcher">
+        <button id="lang-pl">PL</button>
+        <button id="lang-en">EN</button>
+    </div>
+
+    <!-- Główna treść strony, która będzie się przewijać -->
+    <main>
+        <header>
+            <h1 data-translate-key="headerTitle">Eve Haddox</h1>
+            <p data-translate-key="headerSubtitle">Twórca dodatków i skryptów</p>
+        </header>
+
+        <section id="about">
+            <h2 data-translate-key="aboutTitle">O mnie</h2>
+            <p data-translate-key="aboutText">Witaj na mojej stronie. Jestem deweloperem specjalizującym się w tworzeniu rozwiązań dla GMod. Moja pasja to dostarczanie wysokiej jakości, zoptymalizowanych skryptów i dodatków. Przewiń w dół, aby zobaczyć moje prace.</p>
+        </section>
+
+        <section id="projects">
+            <h2 data-translate-key="productsTitle">Moje Produkty</h2>
+            <!-- Ta sekcja zostanie dynamicznie wypełniona produktami -->
+        </section>
+
+        <section id="contact">
+            <h2 data-translate-key="contactTitle">Kontakt</h2>
+            <p data-translate-key="contactText">Masz pytania lub propozycje? Skontaktuj się ze mną przez Gmodstore lub Discord.</p>
+        </section>
+    </main>
+
+    <!-- Importujemy bibliotekę Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.166.1/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.166.1/examples/jsm/"
+            }
+        }
+    </script>
+
+    <!-- Nasz własny skrypt -->
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>
