@@ -155,18 +155,12 @@ function setLanguage(lang) {
     const elementsToTranslate = document.querySelectorAll('[data-translate-key]');
     elementsToTranslate.forEach(element => {
         const key = element.dataset.translateKey;
-        if (translations[lang][key]) {
-            element.innerHTML = translations[lang][key];
-        }
+        if (translations[lang][key]) { element.innerHTML = translations[lang][key]; }
     });
-    if (document.querySelector('.product-card')) {
-        displayProducts();
-    }
+    if (document.querySelector('.product-card')) { displayProducts(); }
 }
-
 langButtons.pl.addEventListener('click', () => setLanguage('pl'));
 langButtons.en.addEventListener('click', () => setLanguage('en'));
-
 async function displayProducts() {
     try {
         const response = await fetch('products.json');
@@ -174,30 +168,20 @@ async function displayProducts() {
         const products = await response.json();
         const projectsSection = document.querySelector('#projects');
         const oldGrid = projectsSection.querySelector('.product-grid');
-        if (oldGrid) {
-            oldGrid.remove();
-        } else {
-             projectsSection.querySelector('h2').innerHTML = translations[currentLang].productsTitle;
-        }
+        if (oldGrid) oldGrid.remove();
+        else projectsSection.querySelector('h2').innerHTML = translations[currentLang].productsTitle;
         const grid = document.createElement('div');
         grid.className = 'product-grid';
         const buttonText = translations[currentLang].productButton;
         products.forEach(product => {
             const card = document.createElement('div');
             card.className = 'product-card';
-            card.innerHTML = `
-                <h3>${product.name}</h3>
-                <p>${product.price} ${product.currency}</p>
-                <a href="${product.url}" target="_blank" rel="noopener noreferrer">${buttonText}</a>
-            `;
+            card.innerHTML = `<h3>${product.name}</h3><p>${product.price} ${product.currency}</p><a href="${product.url}" target="_blank" rel="noopener noreferrer">${buttonText}</a>`;
             grid.appendChild(card);
         });
         projectsSection.appendChild(grid);
-    } catch(error) {
-        console.error("Nie udało się załadować produktów:", error);
-    }
+    } catch(error) { console.error("Nie udało się załadować produktów:", error); }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
     setLanguage(currentLang);
     displayProducts();
