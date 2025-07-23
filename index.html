@@ -8,25 +8,62 @@
 </head>
 <body>
 
-    <!-- Płótno, na którym Three.js będzie renderować tło 3D -->
     <canvas id="bg"></canvas>
 
-    <!-- Przełącznik języków -->
     <div id="lang-switcher">
         <button id="lang-pl">PL</button>
         <button id="lang-en">EN</button>
     </div>
 
-    <!-- Główna treść strony, która będzie się przewijać -->
     <main>
         <header>
             <h1 data-translate-key="headerTitle">Eve Haddox</h1>
             <p data-translate-key="headerSubtitle">Twórca dodatków i skryptów</p>
+            
+            <!-- ZMIANA: Dodajemy nawigację z klikalnymi linkami -->
+            <nav>
+                <a href="#about" data-translate-key="navAbout">O mnie</a>
+                <a href="#timeline" data-translate-key="navTimeline">Timeline</a>
+                <a href="#projects" data-translate-key="navProducts">Produkty</a>
+                <a href="#contact" data-translate-key="navContact">Kontakt</a>
+            </nav>
         </header>
 
+        <!-- Zmieniamy ID sekcji, aby pasowały do linków w nawigacji -->
         <section id="about">
             <h2 data-translate-key="aboutTitle">O mnie</h2>
             <p data-translate-key="aboutText">Witaj na mojej stronie. Jestem deweloperem specjalizującym się w tworzeniu rozwiązań dla GMod. Moja pasja to dostarczanie wysokiej jakości, zoptymalizowanych skryptów i dodatków. Przewiń w dół, aby zobaczyć moje prace.</p>
+        </section>
+
+        <!-- NOWA SEKCJA: Timeline -->
+        <section id="timeline">
+            <h2 data-translate-key="timelineTitle">Timeline</h2>
+                    <div class="timeline-container">
+        <!-- Event 1 -->
+        <div class="timeline-item">
+            <div class="timeline-date">2020</div>
+            <div class="timeline-content">
+                <h3 data-translate-key="timeline1Title">Początek Przygody</h3>
+                <p data-translate-key="timeline1Desc">Rozpoczęcie nauki programowania w LUA i tworzenia pierwszych skryptów.</p>
+            </div>
+        </div>
+        <!-- Event 2 -->
+        <div class="timeline-item">
+            <div class="timeline-date">2022</div>
+            <div class="timeline-content">
+                <h3 data-translate-key="timeline2Title">Pierwszy Publiczny Addon</h3>
+                <p data-translate-key="timeline2Desc">Publikacja pierwszego dodatku na Gmodstore, który zebrał pozytywne opinie.</p>
+            </div>
+        </div>
+        <!-- Event 3 -->
+        <div class="timeline-item">
+            <div class="timeline-date">2024</div>
+            <div class="timeline-content">
+                <h3 data-translate-key="timeline3Title">Nowy Projekt</h3>
+                <p data-translate-key="timeline3Desc">Prace nad nowym, ambitnym projektem, który wkrótce zostanie ujawniony.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="projects">
