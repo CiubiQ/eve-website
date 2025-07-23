@@ -176,45 +176,55 @@ header nav a {
 header nav a:hover {
     color: var(--primary);
 }
+/* ======================================================= */
+/* =========== NOWE STYLE DLA OSI CZASU (TIMELINE) =========== */
+/* ======================================================= */
+
+/* ======================================================= */
+/* ====== ULEPSZONE STYLE DLA OSI CZASU (TIMELINE) ====== */
+/* ======================================================= */
+
 #timeline {
-    min-height: auto; /* Nie musi zajmować całego ekranu */
-    padding-bottom: 10vh;
-    max-width: 1200px; /* Dajemy więcej miejsca na oś czasu */
+    position: relative; /* Potrzebne do pozycjonowania tytułu */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 80vh;
+    width: 100%;
+    max-width: 100%;
+    padding: 6rem 0; /* Zwiększamy padding, żeby zrobić miejsce na tytuł */
+    overflow: hidden;
+}
+
+/* ZMIANA: Pozycjonujemy tytuł "Oś czasu" wyżej */
+#timeline h2 {
+    position: absolute;
+    top: 4rem; /* Odsuwamy od górnej krawędzi sekcji */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary);
 }
 
 .timeline-container {
-    width: 100%;
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
     position: relative;
     display: flex;
-    align-items: flex-start;
-    overflow-x: auto; /* Umożliwia przewijanie w poziomie */
-    padding: 3rem 2rem;
-    /* Stylizacja paska przewijania dla Firefox */
-    scrollbar-color: var(--scroller) var(--header);
+    justify-content: space-around;
 }
 
-/* Stylizacja paska przewijania dla Chrome/Safari */
-.timeline-container::-webkit-scrollbar {
-    height: 8px;
-}
-.timeline-container::-webkit-scrollbar-track {
-    background: var(--header);
-}
-.timeline-container::-webkit-scrollbar-thumb {
-    background-color: var(--scroller);
-    border-radius: 4px;
-}
-
-/* Linia osi czasu */
-.timeline-container::before {
-    content: '';
+.timeline-line {
     position: absolute;
     top: 50%;
     left: 0;
     width: 100%;
-    height: 4px;
-    background-color: var(--scroller);
+    height: 6px;
+    background-color: var(--primary);
     transform: translateY(-50%);
+    z-index: 1;
 }
 
 .timeline-item {
@@ -222,50 +232,86 @@ header nav a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 280px;
-    margin: 0 40px;
+    cursor: pointer; /* Zmieniamy kursor, żeby sugerować interakcję */
 }
 
-/* Kropka na osi czasu */
-.timeline-item::before {
-    content: '';
+.timeline-dot {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     background-color: var(--primary);
     border-radius: 50%;
-    border: 4px solid var(--background);
-    z-index: 1;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    transition: transform 0.3s ease;
 }
 
-/* Naprzemienne ułożenie (góra/dół) */
-.timeline-item:nth-child(odd) {
-    padding-top: 50px;
-}
-.timeline-item:nth-child(even) {
-    padding-bottom: 50px;
-    margin-top: auto;
-}
-.timeline-item:nth-child(even) .timeline-date {
-    order: 2;
-}
-.timeline-item:nth-child(even) .timeline-content {
-    order: 1;
+.timeline-item:hover .timeline-dot {
+    transform: translate(-50%, -50%) scale(1.2);
 }
 
 .timeline-content {
-    background-color: rgba(30, 30, 30, 0.75);
-    backdrop-filter: blur(5px);
-    padding: 1rem;
-    border-radius: 8px;
+    position: absolute;
+    width: 280px; /* Trochę więcej miejsca na opis */
     text-align: center;
+    z-index: 3;
+    transition: transform 0.3s ease;
 }
-.timeline-date {
-    font-size: 1.5rem;
+
+.timeline-content.position-top {
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.timeline-content.position-bottom {
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.timeline-content h3 { font-size: 1.8rem; color: var(--primary); }
+.timeline-content p { font-size: 1.1rem; color: var(--secondary-text); margin: 0.5rem 0; }
+.timeline-content .timeline-date { font-size: 1rem; color: var(--disabled-text); margin-top: 0.5rem; }
+
+/* ZMIANA: Style dla ukrytego opisu (toolipa) */
+.timeline-tooltip {
+    /* Domyślnie ukryty */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    
+    /* Wygląd */
+    margin-top: 1rem;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--secondary-text);
+    background-color: var(--header);
+    border-radius: 5px;
+}
+
+/* Pokazuje tooltip po najechaniu na CAŁY element .timeline-item */
+.timeline-item:hover .timeline-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.product-stats {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 0.75rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.stat-item {
+    color: var(--secondary-text);
     font-weight: bold;
-    color: var(--gold);
-    padding: 20px 0;
+    font-size: 1.1rem;
 }
