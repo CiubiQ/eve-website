@@ -129,8 +129,14 @@ const translations = {
         pageTitle: "Portfolio | Eve Haddox",
         headerTitle: "Eve Haddox",
         headerSubtitle: "Addon & Script Creator",
+        navAbout: "About",
+        navTimeline: "Timeline",
+        navProducts: "Products",
+        navContact: "Contact",
         aboutTitle: "About Me",
-        aboutText: "Welcome to my site. I am a developer specializing in creating solutions for GMod. My passion is to deliver high-quality, optimized scripts and addons. Scroll down to see my work.",
+        aboutText: "Welcome to my site. I am a developer specializing in creating solutions for GMod...",
+        timelineTitle: "Timeline",
+        timelineText: "An interactive timeline showing key moments in my career will appear here soon.",
         productsTitle: "My Products",
         contactTitle: "Contact",
         contactText: "Have questions or suggestions? Contact me via Gmodstore or Discord.",
@@ -139,12 +145,8 @@ const translations = {
 };
 
 const langSwitcher = document.querySelector('#lang-switcher');
-const langButtons = {
-    pl: document.querySelector('#lang-pl'),
-    en: document.querySelector('#lang-en')
-};
+const langButtons = { pl: document.querySelector('#lang-pl'), en: document.querySelector('#lang-en') };
 let currentLang = 'pl';
-
 function setLanguage(lang) {
     currentLang = lang;
     document.documentElement.lang = lang;
