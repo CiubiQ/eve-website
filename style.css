@@ -1,328 +1,327 @@
-/* Definiujemy Twoją paletę kolorów jako zmienne CSS */
+/* ======================================================= */
+/* ============= ZMIENNE I GLOBALNE STYLE ================ */
+/* ======================================================= */
+
 :root {
   --background: rgb(20, 20, 20);
   --header: rgb(30, 30, 30);
   --scroller: rgb(48, 48, 48);
-
   --primary-text: rgb(240, 240, 240);
   --secondary-text: rgb(200, 200, 200);
   --disabled-text: rgb(100, 100, 100);
-
   --primary: rgb(180, 58, 58);
   --disabled: rgb(120, 120, 120);
   --positive: rgb(70, 175, 70);
   --negative: rgb(190, 65, 65);
-
   --gold: rgb(214, 174, 34);
 }
 
-/* Podstawowe style globalne */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-    background-color: var(--background);
-    color: var(--primary-text);
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    line-height: 1.6;
+  background-color: var(--background);
+  color: var(--primary-text);
+  font-family: 'Trebuchet MS', sans-serif;
+  line-height: 1.6;
 }
 
-/* Ustawiamy canvas jako stałe tło, które jest za treścią */
+/* ======================================================= */
+/* ================= GŁÓWNY UKŁAD STRONY ================= */
+/* ======================================================= */
+
+/* Kontener na tło 3D */
 #bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    outline: none;
-    z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  outline: none;
+  z-index: -1;
 }
 
 /* Główny kontener na treść */
 main {
-    position: absolute;
-    width: 100%;
-    padding: 1rem;
+  position: absolute;
+  width: 100%;
+  padding: 1rem;
 }
 
-/* Styl dla głównych sekcji */
+/* Ogólny styl dla wszystkich głównych sekcji */
 header, section {
-    display: grid;
-    place-items: center;
-    text-align: center;
-    min-height: 80vh;
-    padding: 2rem;
-    max-width: 800px;
-    margin: 0 auto 10vh auto; /* Odstęp między sekcjami */
+  display: grid;
+  place-items: center;
+  text-align: center;
+  min-height: 80vh;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto 10vh auto;
 }
 
+/* Ogólne style typografii */
 h1 {
-    font-size: 3rem;
-    color: var(--primary);
+  font-size: 3rem;
+  color: var(--primary);
 }
 
 h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid var(--primary);
-    padding-bottom: 0.5rem;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.5rem;
 }
 
 p {
-    color: var(--secondary-text);
-    font-size: 1.2rem;
+  color: var(--secondary-text);
+  font-size: 1.2rem;
 }
 
-/* Style dla dynamicznie tworzonych produktów */
-#projects .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    width: 100%;
-    margin-top: 2rem;
-}
 
-.product-card a {
-    /* Układ i rozmiar */
-    display: block; /* Sprawia, że link zajmuje całą szerokość i można mu nadać marginesy */
-    margin-top: 1.5rem; /* Odsuwa przycisk od statystyk */
-    padding: 0.75rem; /* Wewnętrzny margines dla "oddechu" */
-    
-    /* Wygląd */
-    background-color: var(--primary); /* Używamy głównego czerwonego koloru */
-    color: var(--primary-text); /* Jasny tekst dla kontrastu */
-    border-radius: 5px; /* Lekko zaokrąglone rogi */
-    text-decoration: none; /* Usuwamy domyślne podkreślenie linku */
-    text-align: center; /* Wyśrodkowanie tekstu */
-    font-weight: bold; /* Pogrubienie czcionki */
-    
-    /* Animacja */
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
+/* ======================================================= */
+/* ================== KOMPONENTY UI ====================== */
+/* ======================================================= */
 
-/* Efekt po najechaniu myszką */
-.product-card a:hover {
-    background-color: var(--negative); /* Zmieniamy kolor na ciemniejszy czerwony */
-    transform: scale(1.03); /* Lekkie powiększenie przycisku */
-    cursor: pointer; /* Zapewnia, że kursor ma wygląd "rączki" */
-}
-
-.product-card h3 {
-    color: var(--primary-text);
-    margin-bottom: 0.5rem;
-}
-
-.product-card p {
-    font-size: 1rem;
-    color: var(--gold);
-    margin-bottom: 1rem;
-}
-
-.product-card {
-    background-color: rgba(30, 30, 30, 0.75); /* Półprzezroczyste tło */
-    backdrop-filter: blur(5px); /* Efekt rozmycia tła (szkło) */
-    border: 1px solid var(--scroller);
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-align: left;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card a:hover {
-    background-color: var(--negative);
-}
-
-/* Style dla przełącznika języków */
+/* Przełącznik języków */
 #lang-switcher {
-    position: fixed; /* Kluczowa właściwość! */
-    top: 20px;
-    right: 20px;
-    z-index: 100; /* Upewnia się, że jest nad wszystkim innym */
-    display: flex;
-    gap: 10px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 10px;
 }
 
 #lang-switcher button {
-    background-color: var(--header);
-    color: var(--primary-text);
-    border: 1px solid var(--scroller);
-    padding: 8px 12px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+  background-color: var(--header);
+  color: var(--primary-text);
+  border: 1px solid var(--scroller);
+  padding: 8px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s;
 }
 
-#lang-switcher button:hover {
-    background-color: var(--primary);
-}
-
-/* Styl dla aktywnego przycisku */
+#lang-switcher button:hover,
 #lang-switcher button.active {
-    background-color: var(--primary);
-    color: var(--primary-text);
-}
-html {
-    scroll-behavior: smooth;
+  background-color: var(--primary);
 }
 
-/* Style dla nawigacji */
+/* Nawigacja w nagłówku */
 header nav {
-    margin-top: 2rem;
-    display: flex;
-    gap: 1.5rem;
-    border-top: 1px solid var(--scroller);
-    padding-top: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  border-top: 1px solid var(--scroller);
+  padding-top: 1rem;
 }
 
 header nav a {
-    color: var(--secondary-text);
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: bold;
-    transition: color 0.3s ease;
+  color: var(--secondary-text);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 header nav a:hover {
-    color: var(--primary);
+  color: var(--primary);
 }
-/* ======================================================= */
-/* =========== NOWE STYLE DLA OSI CZASU (TIMELINE) =========== */
-/* ======================================================= */
+
 
 /* ======================================================= */
-/* ====== ULEPSZONE STYLE DLA OSI CZASU (TIMELINE) ====== */
+/* ================= SEKCJA PRODUKTÓW ==================== */
 /* ======================================================= */
 
-#timeline {
-    position: relative; /* Potrzebne do pozycjonowania tytułu */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 80vh;
-    width: 100%;
-    max-width: 100%;
-    padding: 6rem 0; /* Zwiększamy padding, żeby zrobić miejsce na tytuł */
-    overflow: hidden;
+/* ZMIANA: Zwężamy sekcję produktów dla lepszego wyglądu */
+#projects {
+    max-width: 750px;
 }
 
-/* ZMIANA: Pozycjonujemy tytuł "Oś czasu" wyżej */
-#timeline h2 {
-    position: absolute;
-    top: 4rem; /* Odsuwamy od górnej krawędzi sekcji */
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--primary);
+#projects .product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 2rem;
 }
 
-.timeline-container {
-    width: 80%;
-    max-width: 1000px;
-    margin: 0 auto;
-    position: relative;
-    display: flex;
-    justify-content: space-around;
+.product-card {
+  background-color: var(--header);
+  border: 1px solid var(--scroller);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: left;
 }
 
-.timeline-line {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 6px;
-    background-color: var(--primary);
-    transform: translateY(-50%);
-    z-index: 1;
+.product-card h3 {
+  color: var(--primary-text);
+  margin-bottom: 0.5rem;
 }
 
-.timeline-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer; /* Zmieniamy kursor, żeby sugerować interakcję */
-}
-
-.timeline-dot {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 30px;
-    height: 30px;
-    background-color: var(--primary);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    transition: transform 0.3s ease;
-}
-
-.timeline-item:hover .timeline-dot {
-    transform: translate(-50%, -50%) scale(1.2);
-}
-
-.timeline-content {
-    position: absolute;
-    width: 280px; /* Trochę więcej miejsca na opis */
-    text-align: center;
-    z-index: 3;
-    transition: transform 0.3s ease;
-}
-
-.timeline-content.position-top {
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.timeline-content.position-bottom {
-    top: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.timeline-content h3 { font-size: 1.8rem; color: var(--primary); }
-.timeline-content p { font-size: 1.1rem; color: var(--secondary-text); margin: 0.5rem 0; }
-.timeline-content .timeline-date { font-size: 1rem; color: var(--disabled-text); margin-top: 0.5rem; }
-
-/* ZMIANA: Style dla ukrytego opisu (toolipa) */
-.timeline-tooltip {
-    /* Domyślnie ukryty */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-    
-    /* Wygląd */
-    margin-top: 1rem;
-    padding: 0.75rem;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    color: var(--secondary-text);
-    background-color: var(--header);
-    border-radius: 5px;
-}
-
-/* Pokazuje tooltip po najechaniu na CAŁY element .timeline-item */
-.timeline-item:hover .timeline-tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
 .product-stats {
-    display: flex;
-    justify-content: space-around;
-    gap: 1rem;
-    margin: 1rem 0;
-    padding: 0.75rem;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
 }
 
 .stat-item {
-    color: var(--secondary-text);
-    font-weight: bold;
-    font-size: 1.1rem;
+  color: var(--secondary-text);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.product-card a {
+  display: block;
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  background-color: var(--primary);
+  color: var(--primary-text);
+  border-radius: 5px;
+  text-decoration: none;
+  text-align: center;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.product-card a:hover {
+  background-color: var(--negative);
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+
+/* ======================================================= */
+/* ============ SEKCJA OSI CZASU (TIMELINE) ============== */
+/* ======================================================= */
+
+#timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80vh;
+  width: 100%;
+  max-width: 100%;
+  padding: 6rem 0;
+  overflow: hidden;
+}
+
+#timeline h2 {
+  position: absolute;
+  top: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-container {
+  width: 80%;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background-color: var(--primary);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.timeline-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.timeline-item:hover .timeline-dot {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.timeline-content {
+  position: absolute;
+  width: 280px;
+  text-align: center;
+  z-index: 3;
+  transition: transform 0.3s ease;
+}
+
+.timeline-content.position-top {
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-content.position-bottom {
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-content h3 {
+  font-size: 1.8rem;
+  color: var(--primary);
+}
+
+.timeline-content p {
+  font-size: 1.1rem;
+  color: var(--secondary-text);
+  margin: 0.5rem 0;
+}
+
+.timeline-content .timeline-date {
+  font-size: 1rem;
+  color: var(--disabled-text);
+  margin-top: 0.5rem;
+}
+
+.timeline-tooltip {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--secondary-text);
+  background-color: var(--header);
+  border-radius: 5px;
+}
+
+.timeline-item:hover .timeline-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }

@@ -19,61 +19,50 @@
         <header>
             <h1 data-translate-key="headerTitle">Eve Haddox</h1>
             <p data-translate-key="headerSubtitle">Twórca dodatków i skryptów</p>
-            
-            <!-- ZMIANA: Dodajemy nawigację z klikalnymi linkami -->
             <nav>
                 <a href="#about" data-translate-key="navAbout">O mnie</a>
-                <a href="#timeline" data-translate-key="navTimeline">Timeline</a>
+                <a href="#timeline" data-translate-key="navTimeline">Oś czasu</a>
                 <a href="#projects" data-translate-key="navProducts">Produkty</a>
                 <a href="#contact" data-translate-key="navContact">Kontakt</a>
             </nav>
         </header>
 
-        <!-- Zmieniamy ID sekcji, aby pasowały do linków w nawigacji -->
         <section id="about">
             <h2 data-translate-key="aboutTitle">O mnie</h2>
-            <p data-translate-key="aboutText">Witaj na mojej stronie. Jestem deweloperem specjalizującym się w tworzeniu rozwiązań dla GMod. Moja pasja to dostarczanie wysokiej jakości, zoptymalizowanych skryptów i dodatków. Przewiń w dół, aby zobaczyć moje prace.</p>
+            <p data-translate-key="aboutText">Witaj na mojej stronie. Jestem deweloperem specjalizującym się w tworzeniu rozwiązań dla GMod. Moja pasja to dostarczanie wysokiej jakości, zoptymalizowanych skryptów i dodatków.</p>
         </section>
 
-        <!-- NOWA SEKCJA: Timeline -->
-<section id="timeline">
-    <h2 data-translate-key="timelineTitle">Oś czasu</h2>
-    <div class="timeline-container">
-        <!-- Linia osi czasu -->
-        <div class="timeline-line"></div>
-
-        <!-- Wydarzenie 1: ELevels -->
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content position-bottom">
-                <h3 data-translate-key="timelineEvent1Title">ELevels</h3>
-                <p data-translate-key="timelineEvent1Desc">Leveling & Skills system</p>
-                <div class="timeline-date" data-translate-key="timelineEvent1Date">2024.12.04</div>
-                <!-- ZMIANA: Dodajemy ukryty opis (tooltip) -->
-                <div class="timeline-tooltip" data-translate-key="timelineTooltip1">
-                    System dodaje mechanikę poziomów i umiejętności, nagradzając graczy za aktywność na serwerze.
+        <section id="timeline">
+            <h2 data-translate-key="timelineTitle">Oś czasu</h2>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content position-bottom">
+                        <h3 data-translate-key="timelineEvent1Title">ELevels</h3>
+                        <p data-translate-key="timelineEvent1Desc">Leveling & Skills system</p>
+                        <div class="timeline-date" data-translate-key="timelineEvent1Date">2024.12.04</div>
+                        <div class="timeline-tooltip" data-translate-key="timelineTooltip1">
+                            System dodaje mechanikę poziomów i umiejętności, nagradzając graczy za aktywność na serwerze.
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content position-top">
+                        <h3 data-translate-key="timelineEvent2Title">EReports</h3>
+                        <p data-translate-key="timelineEvent2Desc">Reports and sits system</p>
+                        <div class="timeline-tooltip" data-translate-key="timelineTooltip2">
+                            Narzędzie upraszczające system raportów i zgłoszeń, kluczowe dla sprawnej administracji serwerem.
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Wydarzenie 2: EReports -->
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content position-top">
-                <h3 data-translate-key="timelineEvent2Title">EReports</h3>
-                <p data-translate-key="timelineEvent2Desc">Reports and sits system</p>
-                <!-- ZMIANA: Dodajemy ukryty opis (tooltip) -->
-                <div class="timeline-tooltip" data-translate-key="timelineTooltip2">
-                    Narzędzie upraszczające system raportów i zgłoszeń, kluczowe dla sprawnej administracji serwerem.
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
 
         <section id="projects">
             <h2 data-translate-key="productsTitle">Moje Produkty</h2>
-            <!-- Ta sekcja zostanie dynamicznie wypełniona produktami -->
+            <div class="product-grid"></div>
         </section>
 
         <section id="contact">
@@ -82,9 +71,7 @@
         </section>
     </main>
 
-    <!-- Importy skryptów bez zmian -->
     <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.166.1/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.166.1/examples/jsm/" } }</script>
     <script type="module" src="script.js"></script>
-
 </body>
 </html>
