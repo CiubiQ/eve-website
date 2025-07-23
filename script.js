@@ -113,16 +113,22 @@ const translations = {
         headerTitle: "Eve Haddox",
         headerSubtitle: "Twórca dodatków i skryptów",
         navAbout: "O mnie",
-        navTimeline: "Timeline",
+        navTimeline: "Oś czasu",
         navProducts: "Produkty",
         navContact: "Kontakt",
         aboutTitle: "O mnie",
-        aboutText: "Witaj na mojej stronie. Jestem deweloperem specjalizującym się w tworzeniu rozwiązań dla GMod...",
-        timelineTitle: "Timeline",
-        timelineText: "Tutaj wkrótce pojawi się interaktywna oś czasu pokazująca kluczowe momenty w mojej karierze.",
+        aboutText: "Witaj na mojej stronie...",
+        timelineTitle: "Oś czasu",
+        timelineEvent1Title: "ELevels",
+        timelineEvent1Desc: "Leveling & Skills system",
+        timelineEvent1Date: "2024.12.04",
+        timelineTooltip1: "System dodaje mechanikę poziomów i umiejętności, nagradzając graczy za aktywność na serwerze.", // NOWOŚĆ
+        timelineEvent2Title: "EReports",
+        timelineEvent2Desc: "Reports and sits system",
+        timelineTooltip2: "Narzędzie upraszczające system raportów i zgłoszeń, kluczowe dla sprawnej administracji serwerem.", // NOWOŚĆ
         productsTitle: "Moje Produkty",
         contactTitle: "Kontakt",
-        contactText: "Masz pytania lub propozycje? Skontaktuj się ze mną przez Gmodstore lub Discord.",
+        contactText: "Masz pytania lub propozycje? Skontaktuj się ze mną...",
         productButton: "Zobacz w sklepie"
     },
     en: {
@@ -134,31 +140,25 @@ const translations = {
         navProducts: "Products",
         navContact: "Contact",
         aboutTitle: "About Me",
-        aboutText: "Welcome to my site. I am a developer specializing in creating solutions for GMod...",
+        aboutText: "Welcome to my site...",
         timelineTitle: "Timeline",
-        timelineText: "An interactive timeline showing key moments in my career will appear here soon.",
+        timelineEvent1Title: "ELevels",
+        timelineEvent1Desc: "Leveling & Skills system",
+        timelineEvent1Date: "2024.12.04",
+        timelineTooltip1: "The system adds level and skill mechanics, rewarding players for their activity on the server.", // NOWOŚĆ
+        timelineEvent2Title: "EReports",
+        timelineEvent2Desc: "Reports and sits system",
+        timelineTooltip2: "A tool that simplifies the report and ticket system, crucial for efficient server administration.", // NOWOŚĆ
         productsTitle: "My Products",
         contactTitle: "Contact",
-        contactText: "Have questions or suggestions? Contact me via Gmodstore or Discord.",
-        productButton: "View on Store"
+        contactText: "Have questions or suggestions? Contact me...",
+        button: "View on Store"
     }
 };
-
 const langSwitcher = document.querySelector('#lang-switcher');
 const langButtons = { pl: document.querySelector('#lang-pl'), en: document.querySelector('#lang-en') };
 let currentLang = 'pl';
-function setLanguage(lang) {
-    currentLang = lang;
-    document.documentElement.lang = lang;
-    langButtons.pl.classList.toggle('active', lang === 'pl');
-    langButtons.en.classList.toggle('active', lang === 'en');
-    const elementsToTranslate = document.querySelectorAll('[data-translate-key]');
-    elementsToTranslate.forEach(element => {
-        const key = element.dataset.translateKey;
-        if (translations[lang][key]) { element.innerHTML = translations[lang][key]; }
-    });
-    if (document.querySelector('.product-card')) { displayProducts(); }
-}
+function setLanguage(lang) { currentLang = lang; document.documentElement.lang = lang; langButtons.pl.classList.toggle('active', lang === 'pl'); langButtons.en.classList.toggle('active', lang === 'en'); const elementsToTranslate = document.querySelectorAll('[data-translate-key]'); elementsToTranslate.forEach(element => { const key = element.dataset.translateKey; if (translations[lang][key]) { element.innerHTML = translations[lang][key]; } }); if (document.querySelector('.product-card')) { displayProducts(); } }
 langButtons.pl.addEventListener('click', () => setLanguage('pl'));
 langButtons.en.addEventListener('click', () => setLanguage('en'));
 async function displayProducts() {
@@ -166,23 +166,35 @@ async function displayProducts() {
         const response = await fetch('products.json');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const products = await response.json();
+
         const projectsSection = document.querySelector('#projects');
         const oldGrid = projectsSection.querySelector('.product-grid');
         if (oldGrid) oldGrid.remove();
         else projectsSection.querySelector('h2').innerHTML = translations[currentLang].productsTitle;
+        
         const grid = document.createElement('div');
         grid.className = 'product-grid';
         const buttonText = translations[currentLang].productButton;
+
         products.forEach(product => {
             const card = document.createElement('div');
             card.className = 'product-card';
-            card.innerHTML = `<h3>${product.name}</h3><p>${product.price} ${product.currency}</p><a href="${product.url}" target="_blank" rel="noopener noreferrer">${buttonText}</a>`;
+            
+            // NOWY WYGLĄD KARTY PRODUKTU (bez ceny, z nowymi statystykami)
+            card.innerHTML = `
+                <h3>${product.name}</h3>
+                <div class="product-stats">
+                    <span class="stat-item">👁️ ${product.views}</span>
+                    <span class="stat-item">🛒 ${product.sales}</span>
+                </div>
+                <a href="${product.url}" target="_blank" rel="noopener noreferrer">${buttonText}</a>
+            `;
             grid.appendChild(card);
         });
+
         projectsSection.appendChild(grid);
-    } catch(error) { console.error("Nie udało się załadować produktów:", error); }
+    } catch(error) {
+        console.error("Nie udało się załadować produktów:", error);
+    }
 }
-document.addEventListener('DOMContentLoaded', () => {
-    setLanguage(currentLang);
-    displayProducts();
-});
+document.addEventListener('DOMContentLoaded', () => { setLanguage(currentLang); displayProducts(); });
