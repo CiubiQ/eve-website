@@ -1,111 +1,128 @@
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-// --- KONFIGURACJA SCENY 3D ---
+// =================================================================
+// ============== GŁÓWNA KONFIGURACJA FLOTY I SCENY ================
+// =================================================================
+
+const cruiserFleet = [
+    {
+        name: 'invictus1',
+        path: 'models/invictus_class_star_cruiser.glb',
+        position: { x: -40, y: 20, z: -70 },
+        scale: { x: 0.8, y: 0.8, z: 0.8 },
+        rotation: { x: 0.2, y: 2.5, z: -0.1 },
+        animation: function(ship) {
+            ship.position.x += 0.01;
+            if (ship.position.x > sceneBounds.x) ship.position.x = -sceneBounds.x;
+        }
+    },
+    {
+        name: 'invictus2',
+        path: 'models/invictus_class_star_cruiser.glb',
+        position: { x: 40, y: -15, z: -60 },
+        scale: { x: 0.5, y: 0.5, z: 0.5 },
+        rotation: { x: 0.1, y: -0.8, z: 0.1 },
+        animation: function(ship) {
+            ship.position.x -= 0.02;
+            if (ship.position.x < -sceneBounds.x) ship.position.x = sceneBounds.x;
+        }
+    },
+    {
+        name: 'mc80',
+        path: 'models/star_wars_mc80_home_one_type_star_cruiser.glb',
+        position: { x: 0, y: 25, z: -120 },
+        scale: { x: 0.015, y: 0.015, z: 0.015 },
+        rotation: { x: 3, y: 3.14, z: 0 },
+        animation: function(ship) {
+            ship.position.z += 0.03;
+            if (ship.position.z > 10) ship.position.z = 20;
+        }
+    }
+];
+const sceneBounds = { x: 50, y: 40 };
+
+
+// =================================================================
+// =================== INICJALIZACJA SCENY 3D ======================
+// =================================================================
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
+// ZMIANA: Przybliżamy kamerę, aby centralny obiekt był większy
+camera.position.z = 12;
 
-const renderer = new THREE.WebGLRenderer({
-    canvas: document.querySelector('#bg'),
-    antialias: true,
-});
+const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg'), antialias: true });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-// ŚWIATŁO
-const pointLight = new THREE.PointLight(0xffffff, 30, 100);
-pointLight.position.set(5, 5, 5);
+const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
+sunLight.position.set(5, 3, 5);
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
-scene.add(pointLight, ambientLight);
+scene.add(sunLight, ambientLight);
 
-
-// --- GŁÓWNY, CENTRALNY OBIEKT (POWRÓT DO PIERWSZEJ WERSJI) ---
-const mainGeometry = new THREE.IcosahedronGeometry(1.2, 0);
-const mainMaterial = new THREE.MeshStandardMaterial({
-    color: 0xb43a3a, // Czerwony z palety
-    wireframe: true
-});
-const mainShape = new THREE.Mesh(mainGeometry, mainMaterial);
+const mainShape = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(1.5, 0),
+    new THREE.MeshStandardMaterial({ color: 0xb43a3a, wireframe: true })
+);
 scene.add(mainShape);
 
-
-// --- NOWOŚĆ: FALUJĄCE TRÓJKĄTY PO BOKACH ---
-const triangles = [];
-const triangleCount = 6; // Stworzymy 6 trójkątów
-
-for (let i = 0; i < triangleCount; i++) {
-    // Użyjemy TetrahedronGeometry, czyli bryły w kształcie trójkątnej piramidy
-    const geometry = new THREE.TetrahedronGeometry(0.5, 0);
-    const material = new THREE.MeshStandardMaterial({
-        color: 0xd6ae22, // Złoty kolor z palety
-        wireframe: true
-    });
-    const triangle = new THREE.Mesh(geometry, material);
-
-    // Pozycjonowanie trójkątów po bokach
-    const isLeft = i < triangleCount / 2;
-    const x = (isLeft ? -1 : 1) * THREE.MathUtils.randFloat(4, 8);
-    const y = THREE.MathUtils.randFloat(-4, 4);
-    const z = THREE.MathUtils.randFloat(-5, 2);
-    triangle.position.set(x, y, z);
-    
-    // Zapisujemy dodatkowe dane do animacji falowania
-    triangle.userData = {
-        initialY: y,
-        randomOffset: Math.random() * Math.PI * 2 // Unikalne przesunięcie dla każdej fali
-    };
-
-    triangles.push(triangle);
-    scene.add(triangle);
+const starGeometry = new THREE.SphereGeometry(0.02, 24, 24);
+const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+for (let i = 0; i < 1500; i++) {
+    const star = new THREE.Mesh(starGeometry, starMaterial);
+    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(200));
+    star.position.set(x, y, z);
+    scene.add(star);
 }
 
+const loader = new GLTFLoader();
+const loadedCruisers = {};
+cruiserFleet.forEach(config => {
+    loader.load(config.path, (gltf) => {
+        const cruiser = gltf.scene;
+        const modelToUse = loadedCruisers[config.path] ? loadedCruisers[config.path].clone() : cruiser;
+        modelToUse.position.set(config.position.x, config.position.y, config.position.z);
+        modelToUse.scale.set(config.scale.x, config.scale.y, config.scale.z);
+        modelToUse.rotation.set(config.rotation.x, config.rotation.y, config.rotation.z);
+        scene.add(modelToUse);
+        loadedCruisers[config.name] = modelToUse;
+        if (!loadedCruisers[config.path]) {
+            loadedCruisers[config.path] = cruiser;
+        }
+    }, undefined, (error) => {
+        console.error(`Błąd ładowania modelu ${config.name}:`, error);
+    });
+});
 
-// --- FUNKCJA ANIMACYJNA ---
-const clock = new THREE.Clock();
+
+// =================================================================
+// ===================== PĘTLA ANIMACJI I EVENTY ===================
+// =================================================================
+
 function animate() {
     requestAnimationFrame(animate);
-    const elapsedTime = clock.getElapsedTime();
-
-    // 1. Animacja centralnego obiektu
-    mainShape.rotation.x += 0.001;
     mainShape.rotation.y += 0.002;
-
-    // 2. Animacja falujących trójkątów
-    triangles.forEach(triangle => {
-        // Rotacja
-        triangle.rotation.y += 0.005;
-        // Falowanie (ruch góra-dół) za pomocą funkcji sinus
-        triangle.position.y = triangle.userData.initialY + Math.sin(elapsedTime * 1.5 + triangle.userData.randomOffset) * 0.5;
+    mainShape.rotation.x += 0.001;
+    cruiserFleet.forEach(config => {
+        if (loadedCruisers[config.name]) {
+            config.animation(loadedCruisers[config.name]);
+        }
     });
-
     renderer.render(scene, camera);
 }
 animate();
 
-
-// --- INTERAKCJA PRZY PRZEWIJANIU ---
-function moveCamera() {
-    const t = document.body.getBoundingClientRect().top;
-    mainShape.rotation.x += 0.02;
-    mainShape.rotation.y += 0.01;
-    mainShape.rotation.z += 0.02;
-
-    camera.position.z = 5 + t * -0.002;
-    camera.position.x = t * -0.0001;
-    camera.position.y = t * -0.0001;
-}
+// ZMIANA: Dostosowujemy zoom do nowej pozycji kamery
+function moveCamera() { const t = document.body.getBoundingClientRect().top; camera.position.z = 12 + t * -0.01; }
 document.body.onscroll = moveCamera;
+window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
 
 
-// --- Pozostała część kodu pozostaje bez zmian (Responsive, Tłumaczenia, Produkty) ---
-window.addEventListener('resize', () => { /* ... ten kod jest poprawny ... */
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-// Reszta kodu od `const translations = { ... }` do samego końca jest poprawna i nie wymaga zmian.
-// Upewnij się, że masz ją w swoim pliku. Dla pewności wklejam ją poniżej.
+// =================================================================
+// =========== LOGIKA STRONY (Tłumaczenia, Produkty) ===============
+// =================================================================
+// ZASTĄP STARY OBIEKT 'translations' TYM NOWYM
 
 const translations = {
     pl: {

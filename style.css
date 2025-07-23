@@ -83,18 +83,29 @@ p {
     margin-top: 2rem;
 }
 
-.product-card {
-    background-color: var(--header);
-    border: 1px solid var(--scroller);
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-align: left;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.product-card a {
+    /* Układ i rozmiar */
+    display: block; /* Sprawia, że link zajmuje całą szerokość i można mu nadać marginesy */
+    margin-top: 1.5rem; /* Odsuwa przycisk od statystyk */
+    padding: 0.75rem; /* Wewnętrzny margines dla "oddechu" */
+    
+    /* Wygląd */
+    background-color: var(--primary); /* Używamy głównego czerwonego koloru */
+    color: var(--primary-text); /* Jasny tekst dla kontrastu */
+    border-radius: 5px; /* Lekko zaokrąglone rogi */
+    text-decoration: none; /* Usuwamy domyślne podkreślenie linku */
+    text-align: center; /* Wyśrodkowanie tekstu */
+    font-weight: bold; /* Pogrubienie czcionki */
+    
+    /* Animacja */
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+/* Efekt po najechaniu myszką */
+.product-card a:hover {
+    background-color: var(--negative); /* Zmieniamy kolor na ciemniejszy czerwony */
+    transform: scale(1.03); /* Lekkie powiększenie przycisku */
+    cursor: pointer; /* Zapewnia, że kursor ma wygląd "rączki" */
 }
 
 .product-card h3 {
