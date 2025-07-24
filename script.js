@@ -55,8 +55,53 @@ window.addEventListener('resize', () => { camera.aspect = window.innerWidth / wi
 
 // --- LOGIKA STRONY (Tłumaczenia, Produkty) ---
 const translations = {
-    pl: { pageTitle: "Portfolio | Eve Haddox", headerTitle: "Eve Haddox", headerSubtitle: "Twórca dodatków i skryptów", navAbout: "O mnie", navTimeline: "Oś czasu", navProducts: "Produkty", navContact: "Kontakt", aboutTitle: "O mnie", aboutText: "Witaj na mojej stronie...", timelineTitle: "Oś czasu", timelineEvent1Title: "ELevels", timelineEvent1Desc: "Leveling & Skills system", timelineEvent1Date: "2024.12.04", timelineTooltip1: "System dodaje mechanikę poziomów i umiejętności, nagradzając graczy za aktywność na serwerze.", timelineEvent2Title: "EReports", timelineEvent2Desc: "Reports and sits system", timelineTooltip2: "Narzędzie upraszczające system raportów i zgłoszeń, kluczowe dla sprawnej administracji serwerem.", productsTitle: "Moje Produkty", contactTitle: "Kontakt", contactText: "Masz pytania lub propozycje? Skontaktuj się ze mną...", productButton: "Zobacz w sklepie" },
-    en: { pageTitle: "Portfolio | Eve Haddox", headerTitle: "Eve Haddox", headerSubtitle: "Addon & Script Creator", navAbout: "About", navTimeline: "Timeline", navProducts: "Products", navContact: "Contact", aboutTitle: "About Me", aboutText: "Welcome to my site...", timelineTitle: "Timeline", timelineEvent1Title: "ELevels", timelineEvent1Desc: "Leveling & Skills system", timelineEvent1Date: "2024.12.04", timelineTooltip1: "The system adds level and skill mechanics, rewarding players for their activity on the server.", timelineEvent2Title: "EReports", timelineEvent2Desc: "Reports and sits system", timelineTooltip2: "A tool that simplifies the report and ticket system, crucial for efficient server administration.", productsTitle: "My Products", contactTitle: "Contact", contactText: "Have questions or suggestions? Contact me...", button: "View on Store" }
+    pl: {
+        pageTitle: "Portfolio | Eve Haddox",
+        headerTitle: "Eve Haddox",
+        headerSubtitle: "Twórca dodatków i skryptów",
+        navAbout: "O mnie",
+        navTimeline: "Oś czasu",
+        navProducts: "Produkty",
+        navContact: "Kontakt",
+        aboutTitle: "O mnie",
+        aboutText: "Witaj na mojej stronie...",
+        timelineTitle: "Oś czasu",
+        timelineEvent1Title: "ELevels",
+        timelineEvent1Desc: "Leveling & Skills system",
+        timelineEvent1Date: "2024.12.04",
+        timelineTooltip1: "System dodaje mechanikę poziomów i umiejętności, nagradzając graczy za aktywność na serwerze.",
+        timelineEvent2Title: "EReports",
+        timelineEvent2Desc: "Reports and sits system",
+        timelineTooltip2: "Narzędzie upraszczające system raportów i zgłoszeń, kluczowe dla sprawnej administracji serwerem.",
+        productsTitle: "Moje Produkty",
+        contactTitle: "Kontakt",
+        contactText: "Masz pytania lub propozycje? Skontaktuj się ze mną...",
+        productButton: "Zobacz w sklepie"
+    },
+    en: {
+        pageTitle: "Portfolio | Eve Haddox",
+        headerTitle: "Eve Haddox",
+        headerSubtitle: "Addon & Script Creator",
+        navAbout: "About",
+        navTimeline: "Timeline",
+        navProducts: "Products",
+        navContact: "Contact",
+        aboutTitle: "About Me",
+        aboutText: "Welcome to my site...",
+        timelineTitle: "Timeline",
+        timelineEvent1Title: "ELevels",
+        timelineEvent1Desc: "Leveling & Skills system",
+        timelineEvent1Date: "2024.12.04",
+        timelineTooltip1: "The system adds level and skill mechanics, rewarding players for their activity on the server.",
+        timelineEvent2Title: "EReports",
+        timelineEvent2Desc: "Reports and sits system",
+        timelineTooltip2: "A tool that simplifies the report and ticket system, crucial for efficient server administration.",
+        productsTitle: "My Products",
+        contactTitle: "Contact",
+        contactText: "Have questions or suggestions? Contact me...",
+        // ZMIANA: Poprawiona nazwa klucza z 'button' na 'productButton'
+        productButton: "View on Store" 
+    }
 };
 const langSwitcher = document.querySelector('#lang-switcher');
 const langButtons = { pl: document.querySelector('#lang-pl'), en: document.querySelector('#lang-en') };
