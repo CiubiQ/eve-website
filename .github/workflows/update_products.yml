@@ -2,45 +2,31 @@ name: Automatyczna Aktualizacja Produktów Gmodstore
 
 on:
   schedule:
-    # Uruchamia się co 3 godziny
     - cron: '0 */3 * * *'
-  # Umożliwia ręczne uruchomienie z zakładki Actions na GitHub
   workflow_dispatch:
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 1. Pobranie kodu repozytorium
+      - name: Pobranie kodu repozytorium
         uses: actions/checkout@v4
-
-      - name: 2. Ustawienie Pythona
+      - name: Ustawienie Pythona
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11' # Użycie nowszej wersji Pythona jest zazwyczaj dobrym pomysłem
-
-      - name: 3. Cache dla zależności Pythona
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: 4. Instalacja zależności
+          python-version: '3.9'
+      - name: Instalacja Google Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+      - name: Instalacja zależności Pythona
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: 5. Uruchomienie skryptu scrapującego
+          pip install requests beautifulsoup4 lxml selenium webdriver-manager
+      - name: Uruchomienie skryptu scrapującego
         run: python scrape_products.py
-
-      - name: 6. Zapisanie zmian w pliku products.json
+      - name: Zapisanie zmian w pliku products.json
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: '🤖 Automatyczna aktualizacja listy produktów'
           file_pattern: 'products.json'
-          # Opcjonalnie: dodaj autora commita, aby wyglądał czyściej
-          commit_user_name: gmodstore-bot
-          commit_user_email: bot@github.com
