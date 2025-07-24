@@ -141,7 +141,7 @@ header nav a:hover {
 
 /* ZMIANA: Zwężamy sekcję produktów dla lepszego wyglądu */
 #projects {
-    max-width: 750px;
+    max-width: 800px;
 }
 
 #projects .product-grid {
