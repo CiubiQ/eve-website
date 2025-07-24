@@ -2,35 +2,29 @@ name: Automatyczna Aktualizacja Produktów Gmodstore
 
 on:
   schedule:
-    - cron: '0 */3 * * *' # Aktualizacja co 3 godziny
+    - cron: '0 */3 * * *'
   workflow_dispatch:
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-
     steps:
       - name: Pobranie kodu repozytorium
         uses: actions/checkout@v4
-
       - name: Ustawienie Pythona
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-
       - name: Instalacja Google Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
-
       - name: Instalacja zależności Pythona
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 lxml selenium webdriver-manager
-
       - name: Uruchomienie skryptu scrapującego
         run: python scrape_products.py
-
       - name: Zapisanie zmian w pliku products.json
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
